@@ -1,0 +1,14 @@
+version: '3'
+services:
+    node-app:
+        build:
+            context: .
+            args:
+                NODE_ENV: production
+        env_file:
+            - ./.env
+        command: node index.js
+    # mongo:
+    #     environment:
+    #         MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+    #         MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}

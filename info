@@ -1,0 +1,121 @@
+docker build -t node-app-image .
+=>For build image
+
+docker image ls
+=>list images
+
+docker run -p 4000:3000 -d --name node-app node-app-image
+=>Run docker image and first port for outside world and second for image
+
+docker ps
+=>List running image
+
+docker rm node-app -f
+=>Stop image or delete image
+
+docker exec -it node-app bash
+=>To list item inside image
+
+printenv
+=> list env
+
+exit 
+=>Exit from inside image
+
+
+.dockerignore
+=> For ignore files
+
+docker run -v pathfolderonlocation:pathfolderoncontainer -p 4000:3000 -d --name node-app node-app-image
+=>for volume docker 
+
+docker run -v %cd%:/node-docker -p 4000:3000 -d --name node-app node-app-image
+docker run -v ${pwd}:/node-docker -p 4000:3000 -d --name node-app node-app-image
+=>for powershell
+docker run -v $(pwd):/node-docker -p 4000:3000 -d --name node-app node-app-image
+=> for linux
+
+docker run -v %cd%:/node-docker -v /node-docker/node_modules -p 4000:3000 -d --name node-app node-app-image
+=> -v /node-docker/node_modules
+=>Not to syncup with some modules
+
+>docker run -v %cd%:/node-docker -v /node-docker/node_modules --env-file ./.env -p 4000:4000 -d --name node-app node-app-image
+=>with env file
+
+docker volume ls
+=> to list volume
+
+docker volume prune
+=> to delete volume and it will not delete runing volume
+
+docker rm node-app -fv
+=>stop image
+
+docker-compose up -d --build
+=> to up multiple images --build is used to build every time when we make it up
+
+docker-compose down -v
+=>to down image and use -v for only delete volumes
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+=>with different env up
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v
+=>with different env down and use -v for only delete volumes
+
+docker exec -it node-docker_mongo_1 mongo -u root -p root
+=>For mongo database data check
+
+- ./:/app
+=>sync code
+
+- /app/node_modules
+=>anonymous volume
+
+for mongodb
+mongo-db:/data/db
+left side for naming and right side for actual storage
+
+
+docker network inspect container name
+=>to get details for container network
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --no-deps node-app
+=>to make up for specific container and dont check dependancy
+
+docker logs image -f
+=> logs for image
+
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --scale node-app=2
+=>for scale node application
+
+for production server setup
+=======================================
+ssh root@ip
+
+export MONGO_INITDB_ROOT_USERNAME=root
+printenv
+
+ls -la
+=>list pwd
+
+vi .profile
+=>at last of file
+set -o allexport; source /root/.env; set -o allexport
+
+===================================================
+docker image tag currentimagename repoimagename
+=>to chnage local image name
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml push
+=>to push image to docker hub
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml push specific_image
+=>push with specific image
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml pull 
+=>pull image
+
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml pull specific_image
+=>pull specific image
